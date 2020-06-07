@@ -1,0 +1,31 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Deploy to GitHub Pages
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build-and-deploy:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
+        with:
+          persist-credentials: false
+
+      - name: Install 📥
+        run: brew install wabt
+
+      - name: Build 🔧
+        run: make build
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: build # all of the files are placed here!
