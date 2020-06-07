@@ -1,2 +1,3 @@
 *.wasm
 package-lock.json
+build
